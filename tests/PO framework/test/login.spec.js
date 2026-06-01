@@ -1,6 +1,6 @@
 // tests/ui/login.spec.js
 
-import { test, expect } from '../../fixtures/testBase';
+import { test, expect } from './fixtures/testBase.js';
 
 test('Successful user login', async ({ loginPage, securePage }) => {
   await loginPage.open();
