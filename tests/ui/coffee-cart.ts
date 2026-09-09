@@ -30,7 +30,7 @@ test('Перевірка таби cart', async ({ page }) => {
   await expect(page.locator('#app')).toContainText('Cappuccino');
 });
 
-test('Перевірка пропозиції', async ({ page }) => {
+test('Перевірка пропозицій', async ({ page }) => {
   await page.goto('https://coffee-cart.app/');
   await page.locator('[data-test="Cafe_Latte"]').click();
   await page.locator('[data-test="Cafe_Breve"]').click();
