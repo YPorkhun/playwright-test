@@ -1,13 +1,16 @@
 import { test, expect } from '@playwright/test';
 
-test('Додавання напою в кошик', async ({ page }) => {
+
+test.beforeEach(async ({ page }) => {
   await page.goto('https://coffee-cart.app/');
+});
+
+test('Додавання напою в кошик', async ({ page }) => {
   await page.locator('[data-test="Espresso"]').click();
     await expect(page.getByLabel('Cart page')).toContainText('cart (1)');
 });
 
 test('Перевірка суми', async ({ page }) => {
-  await page.locator('[data-test="Espresso"]').click();
   await page.locator('[data-test="Espresso_Macchiato"]').click();
   await expect(page.locator('[data-test="checkout"]')).toContainText('Total: $22.00');
 });
@@ -24,14 +27,12 @@ test('Перевірка форми оплати/ Успішна оплата', 
 });
 
 test('Перевірка таби cart', async ({ page }) => {
-  await page.goto('https://coffee-cart.app/');
   await page.locator('[data-test="Cappuccino"]').click();
   await page.getByRole('link', { name: 'Cart page' }).click();
   await expect(page.locator('#app')).toContainText('Cappuccino');
 });
 
 test('Перевірка пропозицій', async ({ page }) => {
-  await page.goto('https://coffee-cart.app/');
   await page.locator('[data-test="Cafe_Latte"]').click();
   await page.locator('[data-test="Cafe_Breve"]').click();
   await page.locator('[data-test="Espresso_Macchiato"]').click();
