@@ -17,7 +17,7 @@ export default defineConfig({
   reporter: 'html',
 
   use: {
-    baseURL: 'https://reqres.in/api',
+    baseURL: 'http://104.168.59.50/articles',
 
     trace: 'on-first-retry',
   },
@@ -28,14 +28,14 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
   ],
 });
