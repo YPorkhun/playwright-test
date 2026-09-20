@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 
-
 test ('Success registration of a new user', async ({ page }) => {
 
     const timestamp = Date.now();
