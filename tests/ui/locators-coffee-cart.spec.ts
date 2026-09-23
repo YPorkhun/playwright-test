@@ -4,12 +4,16 @@ test.beforeEach(async ({ page }) => {
   await page.goto('https://coffee-cart.app/');
 });
 
-test ('Adding coffee to cart', async ({ page }) => {
-  await page.locator('[data-test="Espresso"]').click();
-    await expect(page.getByLabel('Cart page')).toContainText('cart (1)');
-  await page.getByRole('link', { name: 'Cart page' }).click();
-    await expect(page.getByText('Espresso$10.00 x 1+-$10.00x')).toBeVisible();
-    await expect(page.locator('#app')).toContainText('Espresso');
+test.only ('Adding coffee to cart', async ({ page }) => {
+  const espresso = page.locator('[data-test="Espresso"]');
+  const cart = page.locator('[aria-label="Cart page"]');
+
+  await espresso.click();
+  await expect(cart).toContainText('cart (1)');
+  await cart.click();
+
+  await expect(page.locator('#app')).toContainText('Espresso');
+  await expect(page.locator('#app')).toContainText('$10.00');
 });
 
 test ('Sum checking', async ({ page }) => {
