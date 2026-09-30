@@ -13,7 +13,6 @@ test.describe('Sortable table', () => {
     const selectedCount = page.locator('xpath=//*[contains(normalize-space(.), "Вибрано")]').last();
 
     await expect(table).toBeVisible();
-
     await expect(checkboxes.nth(0)).not.toBeChecked();
 
     await checkboxes.nth(0).check();
@@ -29,6 +28,7 @@ test.describe('Sortable table', () => {
 
 
   test('Check sorting and order change', async ({ page }) => {
+    
   const durationSort = page.locator('xpath=//button[@data-testid="interactions-sort-duration"]');
   const durationHeader = page.locator('xpath=//button[@data-testid="interactions-sort-duration"]/parent::th');
 
