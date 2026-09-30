@@ -30,7 +30,6 @@ test.describe('Sortable table', () => {
 
   test('Check sorting and order change', async ({ page }) => {
   const durationSort = page.locator('xpath=//button[@data-testid="interactions-sort-duration"]');
-
   const durationHeader = page.locator('xpath=//button[@data-testid="interactions-sort-duration"]/parent::th');
 
   await durationSort.click();
