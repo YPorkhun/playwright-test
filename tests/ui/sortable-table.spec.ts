@@ -28,17 +28,26 @@ test.describe('Sortable table', () => {
 
 
   test('Check sorting and order change', async ({ page }) => {
-    
   const durationSort = page.locator('xpath=//button[@data-testid="interactions-sort-duration"]');
-  const durationHeader = page.locator('xpath=//button[@data-testid="interactions-sort-duration"]/parent::th');
+  const durationCells = page.locator('xpath=//table[@data-testid="interactions-table"]//tbody/tr/td[4]');
 
   await durationSort.click();
 
-  await expect(durationHeader).toHaveAttribute('aria-sort', 'ascending');
+  await expect(durationCells).toHaveText([
+    '0.0 s',
+    '5.7 s',
+    '8.4 s',
+    '12.1 s'
+  ]);
 
   await durationSort.click();
 
-  await expect(durationHeader).toHaveAttribute('aria-sort', 'descending');
+  await expect(durationCells).toHaveText([
+    '12.1 s',
+    '8.4 s',
+    '5.7 s',
+    '0.0 s'
+  ]);
 });
 
 });
