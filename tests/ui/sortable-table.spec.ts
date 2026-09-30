@@ -49,5 +49,4 @@ test.describe('Sortable table', () => {
     '0.0 s'
   ]);
 });
-
 });
