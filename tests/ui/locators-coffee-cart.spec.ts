@@ -4,50 +4,90 @@ test.beforeEach(async ({ page }) => {
   await page.goto('https://coffee-cart.app/');
 });
 
-test.only ('Adding coffee to cart', async ({ page }) => {
+test('Adding coffee to cart', async ({ page }) => {
   const espresso = page.locator('[data-test="Espresso"]');
   const cart = page.locator('[aria-label="Cart page"]');
+  const app = page.locator('#app');
 
   await espresso.click();
+
   await expect(cart).toContainText('cart (1)');
+
   await cart.click();
 
-  await expect(page.locator('#app')).toContainText('Espresso');
-  await expect(page.locator('#app')).toContainText('$10.00');
+  await expect(app).toContainText('Espresso');
+  await expect(app).toContainText('$10.00');
 });
 
 test ('Sum checking', async ({ page }) => {
-  await page.locator('[data-test="Espresso_Macchiato"]').click();
-    await expect(page.locator('[data-test="checkout"]')).toContainText('Total: $22.00');
+  const espressoMacchiato = page.locator('[data-test="Espresso_Macchiato"]');
+  const checkout = page.locator('[data-test="checkout"]');
+
+  await espressoMacchiato.click();
+
+  await expect(checkout).toContainText('Total: $22.00');
 });
 
 test ('Checking promotions', async ({ page }) => {
-  await page.locator('[data-test="Espresso"]').click();
-    await expect(page.locator('#app')).toContainText('It\'s your lucky day! Get an extra cup of Mocha for $4.');
-    await expect(page.locator('#app')).toContainText('Yes, of course!');
-    await expect(page.locator('#app')).toContainText('Nah, I\'ll skip.');
-  await page.getByRole('button', { name: 'Nah, I\'ll skip.' }).click();
-    await expect(page.getByText('It\'s your lucky day! Get an extra cup of Mocha for $4.espressochocolate')).not.toBeVisible();
+  const espresso = page.locator('[data-test="Espresso"]');
+  const app = page.locator('#app');
+  const skipPromotion = page.locator('button[aria-label="Nah, I\'ll skip."]');
+
+  await espresso.click();
+
+  await expect(app).toContainText("It's your lucky day! Get an extra cup of Mocha for $4.");
+  await expect(app).toContainText('Yes, of course!');
+  await expect(app).toContainText("Nah, I'll skip.");
+
+  await skipPromotion.click();
+
+  await expect(app).not.toContainText("It's your lucky day! Get an extra cup of Mocha for $4.");
 });
 
 test('Payment form', async ({ page }) => {
-  await page.locator('[data-test="checkout"]').click();
-  await expect(page.getByText('Payment details×We will send')).toBeVisible();
-  await page.getByRole('textbox', { name: 'Name' }).fill('Yuliia P');
-  await expect(page.getByRole('textbox', { name: 'Name' })).toHaveValue('Yuliia P');
-  await page.getByRole('textbox', { name: 'Email' }).click();
-  await page.getByRole('textbox', { name: 'Email' }).fill('test@gmail.com');
-  await page.getByRole('button', { name: 'Submit' }).click();
-    await expect(page.locator('#app')).toContainText('Thanks for your purchase. Please check your email for payment.');
-    await expect(page.locator('#app')).toBeVisible();
+  const espresso = page.locator('[data-test="Espresso"]');
+  const checkout = page.locator('[data-test="checkout"]');
+  const app = page.locator('#app');
+
+  const nameInput = page.locator('input[name="name"]');
+  const emailInput = page.locator('input[name="email"]');
+  const submitButton = page.locator('button[type="submit"]');
+
+  await espresso.click();
+  await checkout.click();
+
+  await expect(app).toContainText('Payment details');
+
+  await nameInput.fill('Yuliia P');
+  await expect(nameInput).toHaveValue('Yuliia P');
+
+  await emailInput.fill('test@gmail.com');
+
+  await submitButton.click();
+
+  await expect(app).toContainText('Thanks for your purchase. Please check your email for payment.');
 });
 
 test('Removing items from cart', async ({ page }) => {
-  await page.locator('[data-test="Cafe_Breve"]').click();
-    await expect(page.locator('[data-test="checkout"]')).toContainText('Total: $15.00');
-    await expect(page.getByLabel('Cart page')).toContainText('cart (1)');
-  await page.getByRole('link', { name: 'Cart page' }).click();
-    await expect(page.locator('#app')).toContainText('Cafe Breve$15.00 x 1+-$15.00x');
-  await page.getByRole('button', { name: 'Remove all Cafe Breve' }).click();
-    await expect(page.getByRole('paragraph')).toContainText('No coffee, go add some.');
+  const cafeBreve = page.locator('[data-test="Cafe_Breve"]');
+  const checkout = page.locator('[data-test="checkout"]');
+  const cart = page.locator('[aria-label="Cart page"]');
+  const app = page.locator('#app');
+  const removeCafeBreve = page.locator(
+    'button[aria-label="Remove all Cafe Breve"]'
+  );
+
+  await cafeBreve.click();
+
+  await expect(checkout).toContainText('Total: $15.00');
+  await expect(cart).toContainText('cart (1)');
+
+  await cart.click();
+
+  await expect(app).toContainText('Cafe Breve');
+  await expect(app).toContainText('$15.00');
+
+  await removeCafeBreve.click();
+
+  await expect(app).toContainText('No coffee, go add some.');
 });
