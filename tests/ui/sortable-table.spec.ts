@@ -7,10 +7,17 @@ test.describe('Sortable table', () => {
   });
 
   test('Checkbox and count increment', async ({ page }) => {
+    const table = page.locator(
+      'xpath=//table[@data-testid="interactions-table"]'
+    );
 
-    const table = page.locator('xpath=//table[@data-testid="interactions-table"]');
-    const checkboxes = page.locator('xpath=//table[@data-testid="interactions-table"]//input[@type="checkbox"]');
-    const selectedCount = page.locator('xpath=//*[contains(normalize-space(.), "Вибрано")]').last();
+    const checkboxes = page.locator(
+      'xpath=//table[@data-testid="interactions-table"]//input[@type="checkbox"]'
+    );
+
+    const selectedCount = page.locator(
+      'xpath=//*[contains(normalize-space(.), "Вибрано")]'
+    ).last();
 
     await expect(table).toBeVisible();
     await expect(checkboxes.nth(0)).not.toBeChecked();
@@ -26,27 +33,32 @@ test.describe('Sortable table', () => {
     await expect(selectedCount).toContainText('2');
   });
 
-
   test('Check sorting and order change', async ({ page }) => {
-  const durationSort = page.locator('xpath=//button[@data-testid="interactions-sort-duration"]');
-  const durationCells = page.locator('xpath=//table[@data-testid="interactions-table"]//tbody/tr/td[4]');
+    const durationSort = page.locator(
+      'xpath=//button[@data-testid="interactions-sort-duration"]'
+    );
 
-  await durationSort.click();
+    const durationCells = page.locator(
+      'xpath=//table[@data-testid="interactions-table"]//tbody/tr/td[4]'
+    );
 
-  await expect(durationCells).toHaveText([
-    '0.0 s',
-    '5.7 s',
-    '8.4 s',
-    '12.1 s'
-  ]);
+    await durationSort.click();
 
-  await durationSort.click();
+    await expect(durationCells).toHaveText([
+      '0.0 s',
+      '5.7 s',
+      '8.4 s',
+      '12.1 s'
+    ]);
 
-  await expect(durationCells).toHaveText([
-    '12.1 s',
-    '8.4 s',
-    '5.7 s',
-    '0.0 s'
-  ]);
-});
+    await durationSort.click();
+
+    await expect(durationCells).toHaveText([
+      '12.1 s',
+      '8.4 s',
+      '5.7 s',
+      '0.0 s'
+    ]);
+  });
+
 });
