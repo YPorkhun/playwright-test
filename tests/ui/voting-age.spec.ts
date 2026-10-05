@@ -1,6 +1,9 @@
 import { test, expect } from '@playwright/test';
 
 function getVotingMessage(age: number) {
+  if (typeof age !== 'number' || age < 0) {
+    throw new Error('Ви ввели щось не те.');
+  }
   if (age >= 18) {
     return 'Ви можете голосувати.';
   } else {
