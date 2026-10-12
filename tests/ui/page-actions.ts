@@ -17,3 +17,17 @@ export async function fillPaymentForm(
 export async function submitPayment(page: Page) {
   await page.getByRole('button', { name: 'Submit' }).click();
 }
+
+export async function addCoffeeToCart(page: Page, coffee: string) {
+  await page.locator(`[data-test="${coffee}"]`).click();
+}
+
+export async function openCart(page: Page) {
+  await page.getByRole('link', { name: 'Cart page' }).click();
+}
+
+export async function removeCoffeeFromCart(page: Page, coffeeName: string) {
+  await page.getByRole('button', {
+    name: `Remove all ${coffeeName}`
+  }).click();
+}
