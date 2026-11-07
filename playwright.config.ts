@@ -6,6 +6,8 @@ dotenv.config();
 export default defineConfig({
   testDir: './tests',
 
+  globalSetup: './global-setup.ts',
+
   fullyParallel: true,
 
   forbidOnly: !!process.env.CI,
@@ -18,6 +20,8 @@ export default defineConfig({
 
   use: {
     baseURL: 'http://104.168.59.50/articles',
+
+    storageState: 'playwright/.auth/user.json',
 
     trace: 'on-first-retry',
 
