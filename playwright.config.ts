@@ -6,7 +6,7 @@ dotenv.config();
 export default defineConfig({
   testDir: './tests',
 
-  globalSetup: './global-setup.ts',
+  //globalSetup: './global-setup.ts',
 
   fullyParallel: true,
 
@@ -18,14 +18,11 @@ export default defineConfig({
 
   reporter: 'html',
 
-  use: {
-    baseURL: 'http://104.168.59.50/articles',
-
-    storageState: 'playwright/.auth/user.json',
-
-    trace: 'on-first-retry',
-
-  },
+ use: {
+  baseURL: 'http://104.168.59.50',
+  
+  trace: 'on-first-retry',
+},
 
   projects: [
     {

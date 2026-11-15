@@ -4,8 +4,6 @@ test.use({ storageState: { cookies: [], origins: [] } });
 
 test('Accept and update cookies', async ({ page, context }) => {
 await page.goto('https://www.zara.com/es/en/');
-await page.pause();
-
 
   await page.getByRole('button', { name: 'Accept All Cookies' }).click();
   await page.getByRole('button', { name: 'Yes, continue on Spain' }).click();
