@@ -6,6 +6,8 @@ dotenv.config();
 export default defineConfig({
   testDir: './tests',
 
+  //globalSetup: './global-setup.ts',
+
   fullyParallel: true,
 
   forbidOnly: !!process.env.CI,
@@ -16,12 +18,11 @@ export default defineConfig({
 
   reporter: 'html',
 
-  use: {
-    baseURL: 'http://104.168.59.50/articles',
-
-    trace: 'on-first-retry',
-
-  },
+ use: {
+  baseURL: 'http://104.168.59.50',
+  
+  trace: 'on-first-retry',
+},
 
   projects: [
     {
